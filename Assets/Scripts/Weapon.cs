@@ -53,6 +53,13 @@ public class Weapon : MonoBehaviour
         targ.y = targ.y - objectPos.y;
 
         float angle = Mathf.Atan2(targ.y, targ.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+
+        if (target.transform.position.x < transform.position.x)
+            transform.rotation = Quaternion.Euler(new Vector3(-180, 0, -angle));
+        else
+            transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+
+
+
     }
 }

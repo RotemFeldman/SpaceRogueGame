@@ -7,6 +7,7 @@ public class Gun : Weapon
     [Header("Gameplay")]
     [SerializeField] float Range =10f;
     [SerializeField] float ShootingSpeed = 0.5f ;
+    [SerializeField] GameObject Bullet;
 
 
     [Header("Visual")]
@@ -31,7 +32,7 @@ public class Gun : Weapon
     {
         if (_canShoot)
         {
-            //// shoot
+            
             
             _canShoot = false;
             _lastShot = Time.time;
@@ -42,6 +43,14 @@ public class Gun : Weapon
             if (_lastShot + ShootingSpeed < Time.time) { _canShoot = true; }
         }
 
+    }
+
+    public void Shoot(Transform startPosition, float angle)
+    {
+        Instantiate(Bullet);
+
+        Bullet.transform.Translate(startPosition.position);
+        
     }
 
 

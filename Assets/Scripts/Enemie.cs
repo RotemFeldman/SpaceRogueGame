@@ -4,15 +4,36 @@ using UnityEngine;
 
 public class Enemie : MonoBehaviour
 {
+    protected virtual int HP { get;set; }
+    protected virtual float MoveSpeed { get; set; }
 
-    void Start()
+    protected void Start()
     {
         CombatManager.AllEnemies.Add(gameObject);   
     }
 
-    // Update is called once per frame
-    void Update()
+    protected void Update()
     {
+        if (IsDead())
+        {
+            OnDeathDo();
+        }
         
     }
+
+    protected bool IsDead()
+    {
+        if (HP > 0)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    protected void OnDeathDo()
+    {
+        CombatManager.AllEnemies.Remove(gameObject);
+        gameObject.SetActive(false);
+    }
+
 }
