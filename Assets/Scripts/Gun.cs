@@ -21,7 +21,6 @@ public class Gun : Weapon
 
         if (Targets.Count > 0)
         {
-            Debug.Log("test");
             PointToTarget(FindClosestTarget());
             TryShoot();
         }
