@@ -8,7 +8,10 @@ public class Weapon : MonoBehaviour
     
     protected List<GameObject> Targets = new List<GameObject>();
 
-
+    public Vector3 _bulletDirection;
+    public Vector3 _bulletPosition;
+    public Vector3 _bulletRotation;
+    public GameObject _closestEnemie;
 
 
     protected virtual void FindTargetsInRange(float range)
@@ -38,6 +41,7 @@ public class Weapon : MonoBehaviour
             targetDist = (transform.position - target.transform.position).sqrMagnitude;
             if (targetDist < distanceSqr) { closest = target; }
         }
+        _closestEnemie = closest;
         return closest;
     }
 
@@ -54,12 +58,14 @@ public class Weapon : MonoBehaviour
 
         float angle = Mathf.Atan2(targ.y, targ.x) * Mathf.Rad2Deg;
 
-        if (target.transform.position.x < transform.position.x)
-            transform.rotation = Quaternion.Euler(new Vector3(-180, 0, -angle));
-        else
+        if (target.transform.position.x < transform.position.x)        
+            transform.rotation = Quaternion.Euler(new Vector3(-180, 0, -angle));        
+        else        
             transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+        
 
-
-
+        _bulletDirection = target.transform.position - transform.position;
+        _bulletPosition = transform.position;
+        _bulletRotation = transform.position - _closestEnemie.transform.position;
     }
 }

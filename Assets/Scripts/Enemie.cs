@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Enemie : MonoBehaviour
 {
-    protected virtual int HP { get;set; }
+    protected virtual int HP { get; set; } = 5;
     protected virtual float MoveSpeed { get; set; }
 
     protected void Start()
