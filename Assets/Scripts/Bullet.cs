@@ -9,27 +9,26 @@ public class Bullet : MonoBehaviour
     
     private float rot;
 
-    private void Start()
+
+    private void OnEnable()
     {
-        rb = GetComponent<Rigidbody2D>();
+        if (rb == null)
+            rb = GetComponent<Rigidbody2D>();
 
         rb.velocity = new Vector2(Gun.Instance._bulletDirection.x, Gun.Instance._bulletDirection.y).normalized * Gun.Instance._bulletSpeed;
-        rot = Mathf.Atan2(Gun.Instance._bulletRotation.x, Gun.Instance._bulletRotation.y)* Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0f,0f,rot+90f);
+        rot = Mathf.Atan2(Gun.Instance._bulletRotation.x, Gun.Instance._bulletRotation.y) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0f, 0f, rot + 90f);
     }
 
-    private void OnBecameInvisible()
-    {
-        gameObject.SetActive(false);
-    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Player") { return; }
         if (collision.gameObject.tag == "Bullet") { return; }
 
-        Destroy(gameObject);
+        Debug.Log(collision.gameObject.name);
 
+        gameObject.SetActive(false);
     }
 
   

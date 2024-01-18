@@ -75,8 +75,16 @@ public class Gun : Weapon
 
     private void Shoot()
     {
+        GameObject bullet = GetBulletFromPool();
+        
+        if (bullet == null)
+        {
+            Debug.Log("GetBulletFromPool returned null");
+            return;
+        }
 
-        Instantiate(BulletObject, BulletSpawnPoint.transform.position, Quaternion.identity);
+        bullet.transform.position = BulletSpawnPoint.transform.position;
+        bullet.SetActive(true);
         
     }
 
