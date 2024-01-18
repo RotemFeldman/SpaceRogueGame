@@ -18,11 +18,18 @@ public class Bullet : MonoBehaviour
         transform.rotation = Quaternion.Euler(0f,0f,rot+90f);
     }
 
-   
+    private void OnBecameInvisible()
+    {
+        gameObject.SetActive(false);
+    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        
+        if (collision.gameObject.tag == "Player") { return; }
+        if (collision.gameObject.tag == "Bullet") { return; }
+
+        Destroy(gameObject);
+
     }
 
   

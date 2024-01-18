@@ -10,10 +10,19 @@ public class Gun : Weapon
     [Header("Gun")]
     [SerializeField] float Range =10f;
     [SerializeField] float ShootingSpeed = 0.5f ;
+    [SerializeField] GameObject BulletSpawnPoint;
 
     [Header("Bullet")]
     [SerializeField] protected GameObject BulletObject;
     [SerializeField] public float _bulletSpeed;
+    
+    [SerializeField] float ReloadTime = 2f;
+    [SerializeField] GameObject BulletsParent;
+    [SerializeField] int _bulletPoolSize = 10;
+
+    private List<GameObject> _bulletsPool = new List<GameObject>();
+
+    
     
 
     [Header("Visual")]
@@ -27,6 +36,11 @@ public class Gun : Weapon
         Instance = this;
     }
 
+    private void Start()
+    {
+        InstantiateBulletsPool();
+    }
+
     private void Update()
     {
         FindTargetsInRange(Range);
@@ -38,6 +52,9 @@ public class Gun : Weapon
         }
     }
 
+
+
+    #region Shooting Methods
 
     private void TryShoot()
     {
@@ -58,9 +75,37 @@ public class Gun : Weapon
 
     private void Shoot()
     {
-        Instantiate(BulletObject,transform.position,Quaternion.identity);        
+
+        Instantiate(BulletObject, BulletSpawnPoint.transform.position, Quaternion.identity);
+        
     }
 
+    #endregion
 
+
+    private void InstantiateBulletsPool()
+    {
+        for (int i = 0; i < _bulletPoolSize; i++)
+        {
+            GameObject bullet = Instantiate(BulletObject, BulletsParent.transform);
+            bullet.SetActive(false);
+            _bulletsPool.Add(bullet);
+        }
+    }
+
+    private GameObject GetBulletFromPool()
+    {
+        for (int i = 0; i < _bulletPoolSize; i++)
+        {
+            if (!_bulletsPool[i].activeInHierarchy)
+            {
+                return _bulletsPool[i];
+            }
+        }
+
+        return null;
+    }
+
+    
 
 }

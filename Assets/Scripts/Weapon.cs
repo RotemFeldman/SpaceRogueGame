@@ -18,7 +18,6 @@ public class Weapon : MonoBehaviour
     {
         foreach (GameObject enemie  in CombatManager.AllEnemies)
         {
-            Debug.Log(enemie.name);
             float distanceSqr = (transform.position - enemie.transform.position).sqrMagnitude;
             if (distanceSqr < range * range)
             {              
