@@ -10,7 +10,10 @@ public class Gun : Weapon
     [Header("Gun")]
     [SerializeField] float Range =10f;
     [SerializeField] float ShootingSpeed = 0.5f ;
+    [SerializeField] public int Damage = 1;
+
     [SerializeField] GameObject BulletSpawnPoint;
+
 
     [Header("Bullet")]
     [SerializeField] protected GameObject BulletObject;
@@ -47,7 +50,8 @@ public class Gun : Weapon
 
         if (Targets.Count > 0)
         {
-            PointToTarget(FindClosestTarget());
+            FindClosestTarget();
+            PointToTarget(_closestEnemie);
             TryShoot();
         }
     }

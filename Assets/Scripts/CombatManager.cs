@@ -6,7 +6,7 @@ public class CombatManager : MonoBehaviour
 {
     public static CombatManager instance;
 
-    public static List<GameObject> AllEnemies = new List<GameObject>();
+    public static List<Enemie> AllEnemies = new List<Enemie>();
 
     private void Awake()
     {

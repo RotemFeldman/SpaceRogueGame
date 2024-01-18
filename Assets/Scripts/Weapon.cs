@@ -5,37 +5,47 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour 
 {
+    public static Weapon instance;
     
-    protected List<GameObject> Targets = new List<GameObject>();
+    public static List<Enemie> Targets = new List<Enemie>();
 
     public Vector3 _bulletDirection;
     public Vector3 _bulletPosition;
     public Vector3 _bulletRotation;
-    public GameObject _closestEnemie;
+    public Enemie _closestEnemie;
 
+    private void Awake()
+    {
+        if (instance == null)
+            instance = this;
+    }
 
     protected virtual void FindTargetsInRange(float range)
     {
-        foreach (GameObject enemie  in CombatManager.AllEnemies)
+        foreach (Enemie enemie  in CombatManager.AllEnemies)
         {
             float distanceSqr = (transform.position - enemie.transform.position).sqrMagnitude;
-            if (distanceSqr < range * range)
-            {              
-                if (!Targets.Contains(enemie)) { Targets.Add(enemie.gameObject); }
+            if (distanceSqr < range * range && !enemie.IsDead())
+            {
+                if (!Targets.Contains(enemie)) { Targets.Add(enemie); }
+            }
+            else
+            {
+                if (Targets.Contains(enemie)) { Targets.Remove(enemie); }
             }
         }
     }
 
-    protected virtual GameObject FindClosestTarget()
+    protected virtual Enemie FindClosestTarget()
     {
         if (Targets[0] == null) { return null; }
 
-        GameObject closest = Targets[0];
+        Enemie closest = Targets[0];
         float distanceSqr = (transform.position - Targets[0].transform.position).sqrMagnitude;
 
         float targetDist;
 
-        foreach (GameObject target in Targets)
+        foreach (Enemie target in Targets)
         {
             targetDist = (transform.position - target.transform.position).sqrMagnitude;
             if (targetDist < distanceSqr) { closest = target; }
@@ -44,7 +54,7 @@ public class Weapon : MonoBehaviour
         return closest;
     }
 
-    protected virtual void PointToTarget(GameObject target)
+    protected virtual void PointToTarget(Enemie target)
     {
         if (target == null) return;
 
