@@ -9,14 +9,9 @@ public class Weapon : MonoBehaviour
     
     public static List<Enemie> Targets = new List<Enemie>();
 
-
-    [HideInInspector]
     public Vector3 _bulletDirection;
-    [HideInInspector]
     public Vector3 _bulletPosition;
-    [HideInInspector]
     public Vector3 _bulletRotation;
-    [HideInInspector]
     public Enemie _closestEnemie;
 
     private void Awake()
